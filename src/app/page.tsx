@@ -5,199 +5,315 @@ const stats = [
   { value: "10,000+", label: "Students Enrolled" },
   { value: "500+", label: "Practice Questions" },
   { value: "95%", label: "Pass Rate" },
-  { value: "4.9★", label: "Average Rating" },
+  { value: "4.9 ★", label: "Average Rating" },
 ];
 
 const features = [
   {
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
+    emoji: "📝",
     title: "Real Exam Format",
-    description: "Questions modeled after actual entrance exam patterns with accurate difficulty levels.",
+    desc: "Questions modeled after actual entrance exam patterns with accurate difficulty levels.",
   },
   {
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-    ),
+    emoji: "⏱️",
     title: "Timed Practice",
-    description: "Experience real exam conditions with countdown timers on every mock test.",
+    desc: "Experience real exam conditions with countdown timers on every mock test.",
   },
   {
-    icon: (
-      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-      </svg>
-    ),
+    emoji: "📊",
     title: "Detailed Analytics",
-    description: "Track your performance with subject-wise breakdowns and improvement suggestions.",
+    desc: "Track your performance with subject-wise breakdowns and improvement suggestions.",
+  },
+  {
+    emoji: "🔒",
+    title: "Secure & Private",
+    desc: "Your test results and personal data are kept completely private and secure.",
+  },
+  {
+    emoji: "📱",
+    title: "Mobile Friendly",
+    desc: "Practice anywhere, anytime — fully optimized for phones and tablets.",
+  },
+  {
+    emoji: "🏆",
+    title: "Expert Content",
+    desc: "All questions reviewed by subject-matter experts with detailed explanations.",
   },
 ];
 
 export default function HomePage() {
   return (
-    <div>
-      {/* ── Hero Section ── */}
-      <section
-        className="relative overflow-hidden py-20 sm:py-28 px-4"
-        style={{
-          background: `linear-gradient(135deg, ${university.colors.primary} 0%, ${university.colors.primaryLight} 60%, #1e40af 100%)`,
-        }}
-      >
-        {/* Background decorative blobs */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          <div
-            className="absolute -top-20 -right-20 w-96 h-96 rounded-full opacity-10"
-            style={{ backgroundColor: university.colors.accent }}
-          />
-          <div
-            className="absolute -bottom-32 -left-16 w-80 h-80 rounded-full opacity-10"
-            style={{ backgroundColor: university.colors.accentLight }}
-          />
-        </div>
+    <div style={{ overflowX: "hidden" }}>
 
-        <div className="relative max-w-4xl mx-auto text-center">
-          {/* University Logo Badge */}
-          <div className="flex justify-center mb-6">
-            <div
-              className="w-20 h-20 rounded-2xl flex items-center justify-center text-white font-black text-2xl shadow-2xl border-2 border-white/20"
-              style={{ background: "rgba(255,255,255,0.15)", backdropFilter: "blur(10px)" }}
-            >
+      {/* ── HERO ── */}
+      <section className="hero-gradient" style={{ padding: "80px 24px 100px", position: "relative", overflow: "hidden" }}>
+        {/* Decorative circles */}
+        <div style={{
+          position: "absolute", top: -100, right: -100,
+          width: 500, height: 500, borderRadius: "50%",
+          background: "rgba(245,158,11,0.07)", pointerEvents: "none"
+        }} />
+        <div style={{
+          position: "absolute", bottom: -150, left: -80,
+          width: 400, height: 400, borderRadius: "50%",
+          background: "rgba(42,82,152,0.15)", pointerEvents: "none"
+        }} />
+        {/* Grid pattern */}
+        <div style={{
+          position: "absolute", inset: 0,
+          backgroundImage: "radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px)",
+          backgroundSize: "32px 32px", pointerEvents: "none"
+        }} />
+
+        <div style={{ maxWidth: 800, margin: "0 auto", textAlign: "center", position: "relative" }}>
+
+          {/* University badge */}
+          <div className="fade-up" style={{
+            display: "inline-flex", alignItems: "center", gap: 10,
+            background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)",
+            borderRadius: 999, padding: "8px 20px", marginBottom: 32
+          }}>
+            <div style={{
+              width: 32, height: 32, borderRadius: 8,
+              background: "rgba(255,255,255,0.15)",
+              display: "flex", alignItems: "center", justifyContent: "center",
+              color: "#fbbf24", fontWeight: 900, fontSize: 11
+            }}>
               {university.logoText}
             </div>
-          </div>
-
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium mb-5 border border-white/20"
-            style={{ backgroundColor: "rgba(255,255,255,0.1)", color: university.colors.accentLight }}>
-            <span className="w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: university.colors.accentLight }} />
-            Official Mock Test Platform
-          </div>
-
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-4">
-            {university.name}
-            <span className="block text-3xl sm:text-4xl lg:text-5xl font-bold mt-1" style={{ color: university.colors.accentLight }}>
-              Mock Test Platform
+            <span style={{ color: "#fbbf24", fontSize: 13, fontWeight: 700, letterSpacing: "0.04em" }}>
+              {university.name} Official Platform
             </span>
+            <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#4ade80", animation: "pulse 2s infinite" }} />
+          </div>
+
+          {/* Heading */}
+          <h1 className="fade-up fade-up-1" style={{ fontSize: "clamp(36px, 6vw, 64px)", fontWeight: 900, color: "#fff", lineHeight: 1.1, marginBottom: 12 }}>
+            Crack Your{" "}
+            <span className="gradient-text">{university.shortName}</span>
+            <br />Entrance Exam
           </h1>
 
-          <p className="text-slate-300 text-lg sm:text-xl max-w-2xl mx-auto mb-8 leading-relaxed">
+          <p className="fade-up fade-up-2" style={{ fontSize: "clamp(16px, 2vw, 20px)", color: "#94a3b8", lineHeight: 1.7, maxWidth: 580, margin: "0 auto 40px" }}>
             {university.description}
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href="/mock-tests"
-              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-base text-white shadow-lg hover:scale-105 transition-all duration-200"
-              style={{ backgroundColor: university.colors.accent }}
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          {/* CTA Buttons */}
+          <div className="fade-up fade-up-3" style={{ display: "flex", flexWrap: "wrap", gap: 14, justifyContent: "center" }}>
+            <Link href="/mock-tests" className="btn-primary" style={{ fontSize: 16, padding: "14px 32px" }}>
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               Start Free Mock Test
             </Link>
-            <Link
-              href="/pricing"
-              className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-semibold text-base text-white border-2 border-white/40 hover:bg-white/10 hover:scale-105 transition-all duration-200"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-              </svg>
-              Unlock Premium
+            <Link href="/pricing" className="btn-outline" style={{ fontSize: 16, padding: "14px 32px" }}>
+              ✦ Unlock Premium
             </Link>
+          </div>
+
+          {/* Social proof */}
+          <div style={{ marginTop: 40, display: "flex", alignItems: "center", justifyContent: "center", gap: 16 }}>
+            <div style={{ display: "flex" }}>
+              {["#f97316", "#06b6d4", "#8b5cf6", "#ec4899", "#10b981"].map((c, i) => (
+                <div key={i} style={{
+                  width: 32, height: 32, borderRadius: "50%",
+                  background: c, border: "2px solid #0f2444",
+                  marginLeft: i === 0 ? 0 : -8, fontSize: 12,
+                  display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700
+                }}>
+                  {String.fromCharCode(65 + i)}
+                </div>
+              ))}
+            </div>
+            <span style={{ color: "#94a3b8", fontSize: 13 }}>
+              <strong style={{ color: "#e2e8f0" }}>2,000+ students</strong> joined this week
+            </span>
           </div>
         </div>
       </section>
 
-      {/* ── Stats Bar ── */}
-      <section className="bg-white border-b border-slate-100">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            {stats.map((stat) => (
-              <div key={stat.label} className="space-y-1">
-                <p className="text-2xl sm:text-3xl font-black" style={{ color: university.colors.primary }}>
-                  {stat.value}
-                </p>
-                <p className="text-sm text-slate-500 font-medium">{stat.label}</p>
+      {/* ── STATS ── */}
+      <section style={{ background: "#fff", borderBottom: "1px solid #e2e8f0" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", padding: "40px 24px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 32, textAlign: "center" }}>
+            {stats.map((s) => (
+              <div key={s.label}>
+                <div style={{ fontSize: 36, fontWeight: 900, color: university.colors.primary, lineHeight: 1 }}>
+                  {s.value}
+                </div>
+                <div style={{ fontSize: 13, color: "#64748b", fontWeight: 500, marginTop: 6 }}>{s.label}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── Features Section ── */}
-      <section className="py-16 sm:py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-800 mb-3">
-              Why choose our platform?
+      {/* ── FEATURES ── */}
+      <section className="section" style={{ background: "#f8fafc" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ textAlign: "center", marginBottom: 56 }}>
+            <span className="badge" style={{ background: `${university.colors.primary}12`, color: university.colors.primary, marginBottom: 14, display: "inline-block" }}>
+              Why Choose Us
+            </span>
+            <h2 style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 900, color: "#0f172a", marginBottom: 12 }}>
+              Everything you need to succeed
             </h2>
-            <p className="text-slate-500 text-lg max-w-xl mx-auto">
-              Everything you need to prepare with confidence and perform at your best.
+            <p style={{ fontSize: 17, color: "#64748b", maxWidth: 500, margin: "0 auto" }}>
+              Practice smarter with tools designed around how students actually learn.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {features.map((feature) => (
-              <div
-                key={feature.title}
-                className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md hover:-translate-y-1 transition-all duration-300"
-              >
-                <div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center text-white mb-4"
-                  style={{ backgroundColor: university.colors.primary }}
-                >
-                  {feature.icon}
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 20 }}>
+            {features.map((f, i) => (
+              <div key={f.title} className="card" style={{ padding: "28px 28px 24px" }}>
+                <div style={{
+                  width: 52, height: 52, borderRadius: 14,
+                  background: `linear-gradient(135deg, ${university.colors.primary}15, ${university.colors.primaryLight}20)`,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 26, marginBottom: 16
+                }}>
+                  {f.emoji}
                 </div>
-                <h3 className="font-bold text-slate-800 text-lg mb-2">{feature.title}</h3>
-                <p className="text-slate-500 text-sm leading-relaxed">{feature.description}</p>
+                <h3 style={{ fontSize: 17, fontWeight: 700, color: "#0f172a", marginBottom: 8 }}>{f.title}</h3>
+                <p style={{ fontSize: 14, color: "#64748b", lineHeight: 1.7 }}>{f.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── CTA Banner ── */}
-      <section className="py-16 px-4">
-        <div className="max-w-4xl mx-auto">
-          <div
-            className="rounded-3xl p-8 sm:p-12 text-center text-white relative overflow-hidden"
-            style={{
-              background: `linear-gradient(135deg, ${university.colors.primary}, ${university.colors.primaryLight})`,
-            }}
-          >
-            <div className="absolute inset-0 pointer-events-none overflow-hidden">
-              <div className="absolute top-0 right-0 w-64 h-64 rounded-full opacity-10" style={{ backgroundColor: university.colors.accent, transform: "translate(30%, -30%)" }} />
-            </div>
-            <div className="relative">
-              <h2 className="text-3xl sm:text-4xl font-black mb-3">Ready to ace your exam?</h2>
-              <p className="text-slate-300 text-lg mb-8 max-w-xl mx-auto">
-                Join thousands of students who have already unlocked their potential with our premium mock tests.
+      {/* ── TESTS PREVIEW ── */}
+      <section className="section" style={{ background: "#fff" }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 48, alignItems: "center" }}>
+            <div>
+              <span className="badge" style={{ background: `${university.colors.accent}20`, color: "#92400e", marginBottom: 14, display: "inline-block" }}>
+                Mock Tests
+              </span>
+              <h2 style={{ fontSize: "clamp(26px, 3.5vw, 38px)", fontWeight: 900, color: "#0f172a", lineHeight: 1.2, marginBottom: 16 }}>
+                Start free, upgrade when ready
+              </h2>
+              <p style={{ fontSize: 16, color: "#64748b", lineHeight: 1.8, marginBottom: 28 }}>
+                Get started with our free mock test — no signup required. When you&apos;re ready for the full experience, unlock all premium tests with one affordable payment.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link
-                  href="/mock-tests"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl font-semibold bg-white hover:bg-slate-100 transition-colors duration-200"
-                  style={{ color: university.colors.primary }}
-                >
-                  Try Free Test
+              <div style={{ display: "flex", flexDirection: "column", gap: 14, marginBottom: 32 }}>
+                {["1 free mock test — start immediately", "3 premium tests with full syllabus", "Detailed answer explanations", "Performance analytics dashboard"].map(item => (
+                  <div key={item} style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                    <div style={{
+                      width: 22, height: 22, borderRadius: "50%", flexShrink: 0,
+                      background: `${university.colors.primary}15`,
+                      display: "flex", alignItems: "center", justifyContent: "center"
+                    }}>
+                      <svg width="12" height="12" fill="none" stroke={university.colors.primary} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                      </svg>
+                    </div>
+                    <span style={{ fontSize: 14, color: "#475569", fontWeight: 500 }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+                <Link href="/mock-tests" className="btn-dark">View All Tests →</Link>
+                <Link href="/pricing" className="btn-primary">See Pricing</Link>
+              </div>
+            </div>
+
+            {/* Test cards preview */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+              {/* Free card */}
+              <div style={{
+                background: `linear-gradient(135deg, ${university.colors.primary}, ${university.colors.primaryLight})`,
+                borderRadius: 16, padding: "20px 24px", color: "#fff",
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+                boxShadow: "0 8px 30px rgba(30,58,95,0.25)"
+              }}>
+                <div>
+                  <div style={{ fontSize: 11, fontWeight: 600, opacity: 0.7, marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.06em" }}>Free</div>
+                  <div style={{ fontWeight: 800, fontSize: 16 }}>Free Mock Test</div>
+                  <div style={{ fontSize: 13, opacity: 0.75, marginTop: 2 }}>30 questions · 45 min</div>
+                </div>
+                <div style={{
+                  background: university.colors.accent,
+                  padding: "8px 16px", borderRadius: 8,
+                  fontSize: 13, fontWeight: 700, color: "#fff", whiteSpace: "nowrap"
+                }}>
+                  Start →
+                </div>
+              </div>
+
+              {/* Premium cards */}
+              {["Premium Mock Test 1", "Premium Mock Test 2", "Premium Mock Test 3"].map((name, i) => (
+                <div key={name} style={{
+                  background: "#fff", border: "1.5px solid #e2e8f0",
+                  borderRadius: 16, padding: "18px 24px",
+                  display: "flex", alignItems: "center", justifyContent: "space-between",
+                  opacity: 0.85
+                }}>
+                  <div>
+                    <div style={{ fontSize: 11, fontWeight: 600, color: "#94a3b8", marginBottom: 4, textTransform: "uppercase", letterSpacing: "0.06em" }}>Premium</div>
+                    <div style={{ fontWeight: 700, fontSize: 15, color: "#1e293b" }}>{name}</div>
+                    <div style={{ fontSize: 13, color: "#94a3b8", marginTop: 2 }}>100 questions · 2 hrs</div>
+                  </div>
+                  <div style={{
+                    width: 36, height: 36, borderRadius: "50%",
+                    background: "#f1f5f9",
+                    display: "flex", alignItems: "center", justifyContent: "center"
+                  }}>
+                    <svg width="16" height="16" fill="none" stroke="#94a3b8" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                    </svg>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA BANNER ── */}
+      <section className="section" style={{ background: "#f8fafc" }}>
+        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+          <div style={{
+            background: `linear-gradient(135deg, ${university.colors.primary} 0%, ${university.colors.primaryLight} 100%)`,
+            borderRadius: 28, padding: "60px 40px", textAlign: "center",
+            position: "relative", overflow: "hidden",
+            boxShadow: "0 20px 60px rgba(30,58,95,0.3)"
+          }}>
+            <div style={{
+              position: "absolute", top: -60, right: -60, width: 240, height: 240,
+              borderRadius: "50%", background: "rgba(245,158,11,0.12)", pointerEvents: "none"
+            }} />
+            <div style={{
+              position: "absolute", bottom: -80, left: -40, width: 300, height: 300,
+              borderRadius: "50%", background: "rgba(255,255,255,0.04)", pointerEvents: "none"
+            }} />
+            <div style={{ position: "relative" }}>
+              <div style={{ fontSize: 48, marginBottom: 16 }}>🎯</div>
+              <h2 style={{ fontSize: "clamp(26px, 4vw, 40px)", fontWeight: 900, color: "#fff", marginBottom: 12 }}>
+                Ready to ace your exam?
+              </h2>
+              <p style={{ fontSize: 17, color: "#93c5fd", marginBottom: 32, maxWidth: 480, margin: "0 auto 32px" }}>
+                Join thousands of students who have already secured their spot at {university.name}.
+              </p>
+              <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
+                <Link href="/mock-tests" className="btn-primary" style={{ fontSize: 16, padding: "14px 32px" }}>
+                  Start Free Test
                 </Link>
-                <Link
-                  href="/pricing"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-xl font-semibold border-2 border-white/40 hover:bg-white/10 transition-colors duration-200"
-                >
-                  View Pricing
+                <Link href="/pricing" style={{
+                  display: "inline-flex", alignItems: "center", justifyContent: "center",
+                  padding: "14px 32px", borderRadius: 12, fontSize: 16, fontWeight: 700,
+                  color: "#fff", border: "2px solid rgba(255,255,255,0.4)",
+                  background: "transparent", textDecoration: "none", transition: "all 0.2s"
+                }}>
+                  View Pricing →
                 </Link>
               </div>
             </div>
           </div>
         </div>
       </section>
+
     </div>
   );
 }

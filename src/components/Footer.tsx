@@ -3,68 +3,80 @@ import { university } from "@/config/university";
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 text-slate-400 mt-auto">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <footer style={{ background: "#0f172a", color: "#94a3b8", marginTop: "auto" }}>
+      <style>{`
+        .footer-link { color: #94a3b8; text-decoration: none; font-size: 14px; transition: color 0.2s; }
+        .footer-link:hover { color: #fff; }
+        .footer-ext { color: #94a3b8; text-decoration: none; font-size: 14px; }
+        .footer-ext:hover { color: #fff; }
+      `}</style>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "60px 24px 32px" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 40 }}>
+
           {/* Brand */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-3">
-              <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-sm"
-                style={{ background: `linear-gradient(135deg, ${university.colors.primary}, ${university.colors.primaryLight})` }}
-              >
+          <div>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+              <div style={{
+                width: 42, height: 42, borderRadius: 12, flexShrink: 0,
+                background: `linear-gradient(135deg, ${university.colors.primary}, ${university.colors.primaryLight})`,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                color: "#fff", fontWeight: 800, fontSize: 14
+              }}>
                 {university.logoText}
               </div>
               <div>
-                <p className="font-bold text-white text-sm">{university.name}</p>
-                <p className="text-xs text-slate-500">Mock Test Platform</p>
+                <div style={{ color: "#fff", fontWeight: 700, fontSize: 14 }}>{university.name}</div>
+                <div style={{ fontSize: 11, color: "#475569" }}>Mock Test Platform</div>
               </div>
             </div>
-            <p className="text-sm leading-relaxed">
+            <p style={{ fontSize: 13, lineHeight: 1.7, maxWidth: 240 }}>
               Helping students ace their entrance exams with expert-crafted mock tests.
             </p>
           </div>
 
           {/* Links */}
           <div>
-            <h3 className="text-white font-semibold text-sm mb-4">Quick Links</h3>
-            <ul className="space-y-2 text-sm">
+            <h3 style={{ color: "#e2e8f0", fontWeight: 700, fontSize: 13, marginBottom: 16, letterSpacing: "0.05em", textTransform: "uppercase" }}>
+              Quick Links
+            </h3>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {[
                 { label: "Home", href: "/" },
                 { label: "Mock Tests", href: "/mock-tests" },
                 { label: "Pricing", href: "/pricing" },
                 { label: "Login", href: "/login" },
-              ].map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="hover:text-white transition-colors">
-                    {l.label}
-                  </Link>
-                </li>
+              ].map(l => (
+                <Link key={l.href} href={l.href} className="footer-link">
+                  {l.label}
+                </Link>
               ))}
-            </ul>
+            </div>
           </div>
 
           {/* Contact */}
           <div>
-            <h3 className="text-white font-semibold text-sm mb-4">Contact</h3>
-            <ul className="space-y-2 text-sm">
-              <li>
-                <a href={`mailto:${university.contactEmail}`} className="hover:text-white transition-colors">
-                  {university.contactEmail}
-                </a>
-              </li>
-              <li>
-                <a href={university.website} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
-                  {university.website}
-                </a>
-              </li>
-            </ul>
+            <h3 style={{ color: "#e2e8f0", fontWeight: 700, fontSize: 13, marginBottom: 16, letterSpacing: "0.05em", textTransform: "uppercase" }}>
+              Contact
+            </h3>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <a href={`mailto:${university.contactEmail}`} className="footer-ext">
+                {university.contactEmail}
+              </a>
+              <a href={university.website} target="_blank" rel="noopener noreferrer" className="footer-ext">
+                {university.website}
+              </a>
+            </div>
           </div>
         </div>
 
-        <div className="border-t border-slate-800 mt-10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs">
-          <p>© {new Date().getFullYear()} {university.name} Mock Test Platform. All rights reserved.</p>
-          <p>Built for students, by educators.</p>
+        <div style={{ borderTop: "1px solid #1e293b", marginTop: 40, paddingTop: 24, display: "flex", flexWrap: "wrap", justifyContent: "space-between", gap: 12, alignItems: "center" }}>
+          <p style={{ fontSize: 12 }}>© {new Date().getFullYear()} {university.name} Mock Test Platform. All rights reserved.</p>
+          <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+            <p style={{ fontSize: 12 }}>Built for students, by educators.</p>
+            <Link href="/admin/login" style={{ fontSize: 11, color: "#334155", textDecoration: "none", padding: "4px 10px", border: "1px solid #1e293b", borderRadius: 6, transition: "color 0.2s" }}>
+              Admin
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

@@ -16,116 +16,124 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100 shadow-sm">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+    <nav style={{
+      position: "sticky",
+      top: 0,
+      zIndex: 50,
+      background: "rgba(255,255,255,0.97)",
+      backdropFilter: "blur(12px)",
+      borderBottom: "1px solid #e2e8f0",
+      boxShadow: "0 1px 12px rgba(0,0,0,0.06)"
+    }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 68 }}>
+
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-3 group">
-            <div
-              className="w-10 h-10 rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-md group-hover:scale-105 transition-transform duration-200"
-              style={{ background: `linear-gradient(135deg, ${university.colors.primary}, ${university.colors.primaryLight})` }}
-            >
+          <Link href="/" style={{ display: "flex", alignItems: "center", gap: 12, textDecoration: "none" }}>
+            <div style={{
+              width: 42, height: 42,
+              borderRadius: 12,
+              background: `linear-gradient(135deg, ${university.colors.primary}, ${university.colors.primaryLight})`,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              color: "#fff", fontWeight: 800, fontSize: 14,
+              boxShadow: "0 4px 12px rgba(30,58,95,0.3)",
+              flexShrink: 0
+            }}>
               {university.logoText}
             </div>
-            <div className="hidden sm:block">
-              <p className="font-bold text-slate-800 text-sm leading-tight">{university.name}</p>
-              <p className="text-xs text-slate-500">Mock Test Platform</p>
+            <div>
+              <div style={{ fontWeight: 800, color: "#0f172a", fontSize: 15, lineHeight: 1.2 }}>
+                {university.name}
+              </div>
+              <div style={{ fontSize: 11, color: "#94a3b8", fontWeight: 500 }}>Mock Test Platform</div>
             </div>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-1">
+          <div style={{ display: "flex", alignItems: "center", gap: 4 }} className="desktop-nav">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                  pathname === link.href
-                    ? "text-white shadow-sm"
-                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
-                }`}
-                style={
-                  pathname === link.href
-                    ? { backgroundColor: university.colors.primary }
-                    : {}
-                }
+                className={`nav-link${pathname === link.href ? " active" : ""}`}
               >
                 {link.label}
               </Link>
             ))}
           </div>
 
-          {/* Desktop Auth Buttons */}
-          <div className="hidden md:flex items-center gap-3">
-            <Link
-              href="/login"
-              className="px-4 py-2 text-sm font-medium text-slate-700 hover:text-slate-900 transition-colors duration-200"
-            >
+          {/* Desktop Auth */}
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }} className="desktop-nav">
+            <Link href="/login" style={{
+              padding: "8px 16px", borderRadius: 8, fontSize: 14, fontWeight: 600,
+              color: "#475569", textDecoration: "none", transition: "color 0.2s"
+            }}>
               Log in
             </Link>
-            <Link
-              href="/pricing"
-              className="px-4 py-2 text-sm font-medium text-white rounded-lg shadow-sm hover:opacity-90 transition-all duration-200"
-              style={{ backgroundColor: university.colors.accent }}
-            >
-              Unlock Premium
+            <Link href="/pricing" className="btn-primary" style={{ padding: "9px 20px", fontSize: 14 }}>
+              ✦ Unlock Premium
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden p-2 rounded-lg text-slate-600 hover:bg-slate-100 transition-colors"
+            className="mobile-menu-btn"
+            style={{
+              display: "none",
+              padding: 8, borderRadius: 8, border: "none",
+              background: menuOpen ? "#f1f5f9" : "transparent",
+              cursor: "pointer", color: "#475569"
+            }}
             aria-label="Toggle menu"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {menuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
+            <svg width="22" height="22" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {menuOpen
+                ? <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                : <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />}
             </svg>
           </button>
         </div>
 
         {/* Mobile Menu */}
         {menuOpen && (
-          <div className="md:hidden border-t border-slate-100 py-3 space-y-1 animate-in slide-in-from-top-2 duration-200">
+          <div className="menu-open" style={{
+            borderTop: "1px solid #f1f5f9",
+            padding: "12px 0 16px",
+            display: "flex", flexDirection: "column", gap: 4
+          }}>
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
                 onClick={() => setMenuOpen(false)}
-                className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
-                  pathname === link.href
-                    ? "text-white"
-                    : "text-slate-600 hover:bg-slate-100"
-                }`}
-                style={pathname === link.href ? { backgroundColor: university.colors.primary } : {}}
+                className={`nav-link${pathname === link.href ? " active" : ""}`}
               >
                 {link.label}
               </Link>
             ))}
-            <div className="pt-2 flex flex-col gap-2 px-1">
-              <Link
-                href="/login"
-                onClick={() => setMenuOpen(false)}
-                className="block px-4 py-2.5 text-sm font-medium text-center text-slate-700 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors"
-              >
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 8 }}>
+              <Link href="/login" onClick={() => setMenuOpen(false)} style={{
+                padding: "10px 16px", borderRadius: 10, textAlign: "center",
+                border: "1.5px solid #e2e8f0", color: "#475569",
+                fontSize: 14, fontWeight: 600, textDecoration: "none"
+              }}>
                 Log in
               </Link>
-              <Link
-                href="/pricing"
-                onClick={() => setMenuOpen(false)}
-                className="block px-4 py-2.5 text-sm font-medium text-center text-white rounded-lg transition-opacity hover:opacity-90"
-                style={{ backgroundColor: university.colors.accent }}
-              >
-                Unlock Premium
+              <Link href="/pricing" onClick={() => setMenuOpen(false)} className="btn-primary" style={{ justifyContent: "center" }}>
+                ✦ Unlock Premium
               </Link>
             </div>
           </div>
         )}
       </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .desktop-nav { display: none !important; }
+          .mobile-menu-btn { display: flex !important; }
+        }
+      `}</style>
     </nav>
   );
 }

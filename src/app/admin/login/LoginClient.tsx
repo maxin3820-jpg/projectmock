@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "@/lib/supabase/auth";
 import { createClient } from "@/lib/supabase/client";
@@ -13,21 +13,33 @@ export default function AdminLoginClient() {
   const router = useRouter();
   const params = useSearchParams();
   const supabase = createClient();
+  const hasChecked = useRef(false);
 
   useEffect(() => {
+    // Show error from middleware redirect
     if (params.get("error") === "unauthorized") {
       setError("Access denied. Admin privileges required.");
+      return; // Don't check session if we were explicitly rejected
     }
+
+    // Only auto-redirect once — prevents loop
+    if (hasChecked.current) return;
+    hasChecked.current = true;
+
+    // If already logged in as admin, skip login page
     supabase.auth.getSession().then(async ({ data: { session } }) => {
-      if (session) {
-        const { data: profile } = await supabase
-          .from("profiles").select("role").eq("id", session.user.id).single();
-        if (profile?.role === "admin" || profile?.role === "super_admin") {
-          router.replace("/admin");
-        }
+      if (!session) return; // Not logged in — stay on login page
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("role")
+        .eq("id", session.user.id)
+        .single();
+      if (profile?.role === "admin" || profile?.role === "super_admin") {
+        router.replace("/admin");
       }
+      // Not admin — stay on login page, do nothing
     });
-  }, [params, router, supabase]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,14 +55,19 @@ export default function AdminLoginClient() {
 
     if (data.user) {
       const { data: profile } = await supabase
-        .from("profiles").select("role").eq("id", data.user.id).single();
+        .from("profiles")
+        .select("role")
+        .eq("id", data.user.id)
+        .single();
+
       if (!profile || !["admin", "super_admin"].includes(profile.role)) {
         await supabase.auth.signOut();
         setError("Access denied. Admin privileges required.");
         setLoading(false);
         return;
       }
-      router.push("/admin");
+      // Successful admin login — redirect once
+      router.replace("/admin");
     }
     setLoading(false);
   };
@@ -70,16 +87,27 @@ export default function AdminLoginClient() {
           <div style={{ padding: "32px 36px" }}>
             <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 18 }}>
               <div>
-                <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>Email</label>
-                <input type="email" value={email} onChange={e => setEmail(e.target.value)} required autoComplete="email"
-                  style={{ width: "100%", padding: "11px 14px", borderRadius: 10, border: "1.5px solid #e2e8f0", fontSize: 14, color: "#1e293b", background: "#f8fafc", outline: "none", boxSizing: "border-box" }} />
+                <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                  Email
+                </label>
+                <input
+                  type="email" value={email} onChange={e => setEmail(e.target.value)}
+                  required autoComplete="email"
+                  style={{ width: "100%", padding: "11px 14px", borderRadius: 10, border: "1.5px solid #e2e8f0", fontSize: 14, color: "#1e293b", background: "#f8fafc", outline: "none", boxSizing: "border-box" }}
+                />
               </div>
               <div>
-                <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>Password</label>
+                <label style={{ display: "block", fontSize: 12, fontWeight: 700, color: "#374151", marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.05em" }}>
+                  Password
+                </label>
                 <div style={{ position: "relative" }}>
-                  <input type={showPw ? "text" : "password"} value={password} onChange={e => setPassword(e.target.value)} required autoComplete="current-password"
-                    style={{ width: "100%", padding: "11px 44px 11px 14px", borderRadius: 10, border: "1.5px solid #e2e8f0", fontSize: 14, color: "#1e293b", background: "#f8fafc", outline: "none", boxSizing: "border-box" }} />
-                  <button type="button" onClick={() => setShowPw(!showPw)} style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "#94a3b8", fontSize: 12, fontWeight: 600 }}>
+                  <input
+                    type={showPw ? "text" : "password"} value={password}
+                    onChange={e => setPassword(e.target.value)} required autoComplete="current-password"
+                    style={{ width: "100%", padding: "11px 44px 11px 14px", borderRadius: 10, border: "1.5px solid #e2e8f0", fontSize: 14, color: "#1e293b", background: "#f8fafc", outline: "none", boxSizing: "border-box" }}
+                  />
+                  <button type="button" onClick={() => setShowPw(!showPw)}
+                    style={{ position: "absolute", right: 12, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", color: "#94a3b8", fontSize: 12, fontWeight: 600 }}>
                     {showPw ? "Hide" : "Show"}
                   </button>
                 </div>
@@ -91,12 +119,18 @@ export default function AdminLoginClient() {
               )}
               <button type="submit" disabled={loading} style={{ padding: "13px", borderRadius: 12, background: "linear-gradient(135deg,#1e3a5f,#2a5298)", color: "#fff", fontWeight: 700, fontSize: 15, border: "none", cursor: loading ? "not-allowed" : "pointer", opacity: loading ? 0.8 : 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
                 {loading ? (
-                  <><svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ animation: "spin 0.8s linear infinite" }}><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.3)" strokeWidth="4"/><path fill="white" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>Signing in...</>
+                  <>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" style={{ animation: "spin 0.8s linear infinite" }}>
+                      <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.3)" strokeWidth="4"/>
+                      <path fill="white" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+                    </svg>
+                    Signing in...
+                  </>
                 ) : "Sign In to Admin Panel →"}
               </button>
             </form>
             <div style={{ marginTop: 16, padding: "12px 14px", background: "#f0fdf4", border: "1px solid #bbf7d0", borderRadius: 8, fontSize: 12, color: "#16a34a" }}>
-              <strong>Note:</strong> Create an admin user in Supabase Auth and set their role to <code>admin</code> in the profiles table.
+              <strong>Admin:</strong> maxin3820@gmail.com — set role to <code>admin</code> in Supabase profiles table.
             </div>
           </div>
         </div>

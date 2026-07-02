@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 export const dynamic = "force-dynamic";
 import { useSupabaseAuth } from "@/lib/hooks/useSupabaseAuth";
@@ -45,13 +45,23 @@ export default function AdminPage() {
   const { user, profile, loading } = useSupabaseAuth();
   const { activeSection, darkMode } = useAdminStore();
   const router = useRouter();
+  const hasRedirected = useRef(false);
 
   useEffect(() => {
-    if (!loading && (!user || !["admin", "super_admin"].includes(profile?.role ?? ""))) {
+    // Do NOT redirect while still loading — wait for full auth + profile data
+    if (loading) return;
+    // Only redirect once to prevent loops
+    if (hasRedirected.current) return;
+
+    const isAdmin = ["admin", "super_admin"].includes(profile?.role ?? "");
+
+    if (!user || !isAdmin) {
+      hasRedirected.current = true;
       router.replace("/admin/login");
     }
-  }, [user, profile, loading, router]);
+  }, [loading, user, profile, router]);
 
+  // Show spinner while loading — never render redirect logic yet
   if (loading) {
     return (
       <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#0f172a" }}>
@@ -67,7 +77,10 @@ export default function AdminPage() {
     );
   }
 
-  if (!user || !["admin", "super_admin"].includes(profile?.role ?? "")) return null;
+  // Not admin — render nothing (redirect is in flight)
+  if (!user || !["admin", "super_admin"].includes(profile?.role ?? "")) {
+    return null;
+  }
 
   const bg = darkMode ? "#0f172a" : "#f8fafc";
 

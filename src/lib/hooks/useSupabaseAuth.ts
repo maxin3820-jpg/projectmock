@@ -10,31 +10,68 @@ export function useSupabaseAuth() {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [session, setSession] = useState<Session | null>(null);
+  // Start as true — never flicker to false until we have full data
   const [loading, setLoading] = useState(true);
   const supabase = createClient();
 
-  const fetchProfile = useCallback(async (userId: string) => {
-    const { data } = await supabase.from("profiles").select("*").eq("id", userId).single();
-    setProfile(data);
+  const fetchProfile = useCallback(async (userId: string): Promise<Profile | null> => {
+    const { data } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", userId)
+      .single();
+    return data as Profile | null;
   }, [supabase]);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    let mounted = true;
+
+    async function init() {
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (!mounted) return;
+
       setSession(session);
       setUser(session?.user ?? null);
-      if (session?.user) fetchProfile(session.user.id);
-      setLoading(false);
-    });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      setUser(session?.user ?? null);
-      if (session?.user) fetchProfile(session.user.id);
-      else setProfile(null);
-      setLoading(false);
-    });
+      if (session?.user) {
+        // Wait for profile BEFORE setting loading = false
+        const profileData = await fetchProfile(session.user.id);
+        if (!mounted) return;
+        setProfile(profileData);
+      }
 
-    return () => subscription.unsubscribe();
+      // Only now is it safe to make redirect decisions
+      setLoading(false);
+    }
+
+    init();
+
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (_event, session) => {
+        if (!mounted) return;
+
+        setSession(session);
+        setUser(session?.user ?? null);
+
+        if (session?.user) {
+          // Wait for profile before clearing loading
+          setLoading(true);
+          const profileData = await fetchProfile(session.user.id);
+          if (!mounted) return;
+          setProfile(profileData);
+          setLoading(false);
+        } else {
+          setProfile(null);
+          setLoading(false);
+        }
+      }
+    );
+
+    return () => {
+      mounted = false;
+      subscription.unsubscribe();
+    };
   }, [supabase, fetchProfile]);
 
   const isAdmin = profile?.role === "admin" || profile?.role === "super_admin";

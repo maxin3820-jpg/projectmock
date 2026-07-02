@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { university } from "@/config/university";
+import BuyButton from "./BuyButton";
 
 // Design tokens
 const blue = {
@@ -160,25 +161,7 @@ export default function PricingPage() {
                 </div>
 
                 {/* CTA Button */}
-                <button type="button" style={{
-                  width:"100%", padding:"15px 24px",
-                  borderRadius:14, border:"none", cursor:"pointer",
-                  fontSize:16, fontWeight:800, color:"#fff",
-                  background:`linear-gradient(135deg, ${blue[700]}, ${blue[600]})`,
-                  boxShadow:`0 4px 14px rgba(37,99,235,0.35), 0 2px 4px rgba(37,99,235,0.2)`,
-                  transition:"all 0.2s ease", letterSpacing:"0.01em",
-                }}
-                  onMouseEnter={e => {
-                    (e.currentTarget as HTMLButtonElement).style.transform = "translateY(-2px)";
-                    (e.currentTarget as HTMLButtonElement).style.boxShadow = `0 8px 24px rgba(37,99,235,0.45), 0 2px 4px rgba(37,99,235,0.2)`;
-                  }}
-                  onMouseLeave={e => {
-                    (e.currentTarget as HTMLButtonElement).style.transform = "translateY(0)";
-                    (e.currentTarget as HTMLButtonElement).style.boxShadow = `0 4px 14px rgba(37,99,235,0.35), 0 2px 4px rgba(37,99,235,0.2)`;
-                  }}
-                >
-                  Buy Now — Rs. 999
-                </button>
+                <BuyButton />
 
                 <p style={{ textAlign:"center", fontSize:12, color:"#94a3b8", marginTop:12 }}>
                   🔒 Secured &amp; Encrypted · No recurring charges

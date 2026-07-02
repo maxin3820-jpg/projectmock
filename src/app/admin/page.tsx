@@ -1,6 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+export const dynamic = "force-dynamic";
 import { useSupabaseAuth } from "@/lib/hooks/useSupabaseAuth";
 import { useAdminStore } from "@/store/adminStore";
 import Sidebar from "@/components/admin/Sidebar";

@@ -2,8 +2,17 @@ import { createBrowserClient } from "@supabase/ssr";
 import type { Database } from "./types";
 
 export function createClient() {
-  return createBrowserClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  );
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!url || !key) {
+    // During static build without env vars — return a dummy client
+    // that will be replaced at runtime when env vars are available
+    return createBrowserClient<Database>(
+      "https://placeholder.supabase.co",
+      "placeholder-key"
+    );
+  }
+
+  return createBrowserClient<Database>(url, key);
 }

@@ -47,11 +47,12 @@ export default function HomePage() {
 
       {/* ── HERO ── */}
       <section className="hero-gradient" style={{ padding: "80px 24px 100px", position: "relative", overflow: "hidden" }}>
-        {/* Decorative circles */}
+        {/* Decorative circles — fully contained within hero */}
         <div style={{
-          position: "absolute", top: -100, right: -100,
-          width: 500, height: 500, borderRadius: "50%",
-          background: "rgba(245,158,11,0.07)", pointerEvents: "none"
+          position: "absolute", top: 0, right: -60,
+          width: 420, height: 420, borderRadius: "50%",
+          background: "rgba(245,158,11,0.07)", pointerEvents: "none",
+          transform: "translateY(-30%)"
         }} />
         <div style={{
           position: "absolute", bottom: -150, left: -80,
@@ -112,17 +113,20 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {/* Social proof */}
+          {/* Social proof — avatar stack */}
           <div style={{ marginTop: 40, display: "flex", alignItems: "center", justifyContent: "center", gap: 16 }}>
             <div style={{ display: "flex" }}>
               {["#f97316", "#06b6d4", "#8b5cf6", "#ec4899", "#10b981"].map((c, i) => (
                 <div key={i} style={{
                   width: 32, height: 32, borderRadius: "50%",
                   background: c, border: "2px solid #0f2444",
-                  marginLeft: i === 0 ? 0 : -8, fontSize: 12,
-                  display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: 700
+                  marginLeft: i === 0 ? 0 : -8,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  overflow: "hidden", flexShrink: 0
                 }}>
-                  {String.fromCharCode(65 + i)}
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="rgba(255,255,255,0.9)">
+                    <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
+                  </svg>
                 </div>
               ))}
             </div>
@@ -298,7 +302,7 @@ export default function HomePage() {
               </p>
               <div style={{ display: "flex", gap: 14, justifyContent: "center", flexWrap: "wrap" }}>
                 <Link href="/mock-tests" className="btn-primary" style={{ fontSize: 16, padding: "14px 32px" }}>
-                  Start Free Test
+                  Start Free Mock Test
                 </Link>
                 <Link href="/pricing" style={{
                   display: "inline-flex", alignItems: "center", justifyContent: "center",

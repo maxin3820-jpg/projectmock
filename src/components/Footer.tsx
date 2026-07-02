@@ -44,7 +44,7 @@ export default function Footer() {
                 { label: "Home", href: "/" },
                 { label: "Mock Tests", href: "/mock-tests" },
                 { label: "Pricing", href: "/pricing" },
-                { label: "Login", href: "/login" },
+                { label: "Log in", href: "/login" },
               ].map(l => (
                 <Link key={l.href} href={l.href} className="footer-link">
                   {l.label}
@@ -62,7 +62,7 @@ export default function Footer() {
               <a href={`mailto:${university.contactEmail}`} className="footer-ext">
                 {university.contactEmail}
               </a>
-              <a href={university.website} target="_blank" rel="noopener noreferrer" className="footer-ext">
+              <a href="https://www.neduet.edu.pk" target="_blank" rel="noopener noreferrer" className="footer-ext">
                 {university.website}
               </a>
             </div>

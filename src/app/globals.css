@@ -52,16 +52,16 @@ body {
   font-weight: 700;
   font-size: 15px;
   color: #fff;
-  background: #f59e0b;
+  background: #16a34a;
   border: none;
   cursor: pointer;
   transition: all 0.2s;
   text-decoration: none;
 }
 .btn-primary:hover {
-  background: #d97706;
+  background: #15803d;
   transform: translateY(-1px);
-  box-shadow: 0 8px 25px rgba(245,158,11,0.35);
+  box-shadow: 0 8px 25px rgba(22,163,74,0.35);
 }
 
 .btn-outline {
@@ -165,7 +165,7 @@ body {
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  background: linear-gradient(135deg, #22c55e, #16a34a);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -221,3 +221,55 @@ body {
 }
 .compare-table tr:last-child td { border-bottom: none; }
 .compare-table tr:hover td { background: #f8fafc; }
+
+/* ── Admin Panel Mobile Responsiveness ── */
+@media (max-width: 768px) {
+  /* Hide sidebar on mobile — show hamburger */
+  .admin-sidebar {
+    position: fixed !important;
+    left: -240px !important;
+    top: 0;
+    height: 100vh;
+    z-index: 200;
+    transition: left 0.25s ease !important;
+    box-shadow: 4px 0 20px rgba(0,0,0,0.3);
+  }
+  .admin-sidebar.open {
+    left: 0 !important;
+  }
+  .admin-overlay {
+    display: block !important;
+  }
+  /* Make tables scroll horizontally */
+  .admin-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  /* Stack chart grid on mobile */
+  .admin-chart-grid {
+    grid-template-columns: 1fr !important;
+  }
+  /* Stack stat cards 2 per row on mobile */
+  .admin-stat-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+.admin-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 199;
+  backdrop-filter: blur(2px);
+}
+
+/* Pricing responsive */
+@media (max-width: 640px) {
+  .pricing-hero { padding: 56px 16px 64px !important; }
+  .pricing-grid { grid-template-columns: 1fr !important; }
+  .pricing-card { position: static !important; }
+  .compare-grid { grid-template-columns: 1fr 70px 85px !important; }
+  .compare-grid span { font-size: 11px !important; }
+  .trust-badges { gap: 20px !important; }
+}

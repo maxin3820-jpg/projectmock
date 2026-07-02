@@ -14,8 +14,8 @@ export const university = {
   colors: {
     primary: "#1e3a5f",       // Deep navy blue
     primaryLight: "#2a5298",  // Medium blue
-    accent: "#f59e0b",        // Amber/gold
-    accentLight: "#fbbf24",
+    accent: "#16a34a",        // Green
+    accentLight: "#22c55e",
   },
   contactEmail: "support@nedmocktest.edu.pk",
   website: "https://www.neduet.edu.pk",

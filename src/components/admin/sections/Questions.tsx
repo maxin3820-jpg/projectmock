@@ -2,6 +2,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useAdminStore } from "@/store/adminStore";
 import { useAdminData } from "@/lib/hooks/useAdmin";
+import CSVUpload from "../CSVUpload";
 
 interface QuestionRow {
   id: string;
@@ -32,6 +33,7 @@ export default function Questions() {
     subject_id: string; chapter_id: string; explanation: string; tags: string;
     options: { text: string; is_correct: boolean }[];
   } | null>(null);
+  const [showCSV, setShowCSV] = useState(false);
 
   const PER_PAGE = 10;
 
@@ -121,6 +123,13 @@ export default function Questions() {
         <button onClick={() => setModal(blankModal())}
           style={{ padding: "9px 18px", borderRadius: 10, background: "#1e3a5f", border: "none", color: "#fff", fontWeight: 700, fontSize: 13, cursor: "pointer" }}>
           + Add Question
+        </button>
+        <button onClick={() => setShowCSV(true)}
+          style={{ padding: "9px 18px", borderRadius: 10, background: "#16a34a", border: "none", color: "#fff", fontWeight: 700, fontSize: 13, cursor: "pointer", display: "flex", alignItems: "center", gap: 6 }}>
+          <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/>
+          </svg>
+          Bulk Upload CSV
         </button>
       </div>
 
@@ -264,6 +273,15 @@ export default function Questions() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* CSV Upload Modal */}
+      {showCSV && (
+        <CSVUpload
+          subjects={subjects}
+          onClose={() => setShowCSV(false)}
+          onSuccess={() => { setShowCSV(false); load(); }}
+        />
       )}
     </div>
   );

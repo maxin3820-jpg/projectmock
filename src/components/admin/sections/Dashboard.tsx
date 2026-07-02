@@ -80,7 +80,7 @@ export default function Dashboard() {
 
   return (
     <div style={{ padding: 24, background: bg, minHeight: "100%", overflowY: "auto" }}>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 16, marginBottom: 24 }}>
+      <div className="admin-stat-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(180px,1fr))", gap: 16, marginBottom: 24 }}>
         <StatCard label="Total Users" value={stats.totalUsers} icon="👥" color="#2a5298" />
         <StatCard label="Premium Users" value={stats.premiumUsers} icon="⭐" color="#8b5cf6" change={stats.totalUsers ? `${Math.round(stats.premiumUsers / stats.totalUsers * 100)}% of total` : ""} />
         <StatCard label="Total Tests" value={stats.totalTests} icon="📝" color="#06b6d4" />
@@ -90,7 +90,7 @@ export default function Dashboard() {
       </div>
 
       {/* Charts */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 24 }}>
+      <div className="admin-chart-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16, marginBottom: 24 }}>
         <div {...chartProps}>
           <h3 style={{ fontSize: 14, fontWeight: 700, color: text, marginBottom: 16 }}>Daily Traffic</h3>
           <ResponsiveContainer width="100%" height={180}>
@@ -144,7 +144,7 @@ export default function Dashboard() {
       </div>
 
       {/* Recent activity */}
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+      <div className="admin-chart-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
         <div style={{ background: card, border: `1px solid ${border}`, borderRadius: 16, padding: 20 }}>
           <h3 style={{ fontSize: 14, fontWeight: 700, color: text, marginBottom: 16 }}>Recent Registrations</h3>
           {loading ? (

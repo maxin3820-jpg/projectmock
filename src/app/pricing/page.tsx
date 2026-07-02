@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { university } from "@/config/university";
 import BuyButton from "./BuyButton";
 
 // Design tokens
@@ -107,12 +106,12 @@ export default function PricingPage() {
       </section>
 
       {/* ── MAIN CONTENT ─────────────────────────────────────────────────── */}
-      <div style={{ maxWidth:1140, margin:"0 auto", padding:"72px 24px 96px" }}>
+      <div style={{ maxWidth:1140, margin:"0 auto", padding:"clamp(32px,5vw,72px) 16px clamp(48px,6vw,96px)" }}>
 
-        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(340px,1fr))", gap:36, alignItems:"start" }}>
+        <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(300px,1fr))", gap:28, alignItems:"start" }}>
 
           {/* ── PRICING CARD ───────────────────────────────────────────── */}
-          <div style={{ position:"sticky", top:90 }}>
+          <div>
             <div style={{
               background:"#fff", borderRadius:28,
               boxShadow:"0 4px 6px rgba(0,0,0,0.04), 0 10px 40px rgba(30,58,95,0.10), 0 40px 80px rgba(30,58,95,0.06)",
@@ -169,10 +168,10 @@ export default function PricingPage() {
               </div>
 
               {/* Free test nudge */}
-              <div style={{ borderTop:"1px solid #f1f5f9", padding:"16px 32px", background:"#fafafa" }}>
+              <div style={{ borderTop:"1px solid #f1f5f9", padding:"16px 24px", background:"#fafafa" }}>
                 <Link href="/mock-tests" style={{ textDecoration:"none", display:"flex", alignItems:"center", justifyContent:"center", gap:6 }}>
-                  <span style={{ fontSize:13, color:"#64748b" }}>Not ready?</span>
-                  <span style={{ fontSize:13, fontWeight:700, color: blue[600] }}>Try the free test first →</span>
+                  <span style={{ fontSize:13, color:"#64748b" }}>Want to see the tests first?</span>
+                  <span style={{ fontSize:13, fontWeight:700, color: blue[600] }}>View Mock Tests →</span>
                 </Link>
               </div>
             </div>
@@ -247,10 +246,10 @@ export default function PricingPage() {
         </div>
 
         {/* ── TRUST BADGES ─────────────────────────────────────────────── */}
-        <div style={{ marginTop:72, padding:"36px 40px", background:"#fff",
+        <div style={{ marginTop:48, padding:"clamp(24px,4vw,36px) clamp(20px,4vw,40px)", background:"#fff",
           borderRadius:24, border:"1px solid #e2e8f0",
           boxShadow:"0 2px 4px rgba(0,0,0,0.03), 0 8px 24px rgba(0,0,0,0.05)" }}>
-          <div style={{ display:"flex", flexWrap:"wrap", justifyContent:"center", gap:40 }}>
+          <div style={{ display:"flex", flexWrap:"wrap", justifyContent:"center", gap:"clamp(20px,4vw,40px)" }}>
             {[
               { icon: (
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -294,17 +293,14 @@ export default function PricingPage() {
         </div>
 
         {/* ── BOTTOM CTA ───────────────────────────────────────────────── */}
-        <div style={{ marginTop:64, textAlign:"center" }}>
-          <p style={{ fontSize:15, color:"#64748b", marginBottom:16 }}>
-            Still have questions? We&apos;re here to help.
-          </p>
+        <div style={{ marginTop:48, textAlign:"center" }}>
           <div style={{ display:"flex", gap:14, justifyContent:"center", flexWrap:"wrap" }}>
             <Link href="/mock-tests" style={{
               display:"inline-flex", alignItems:"center", gap:8, padding:"12px 28px",
               borderRadius:12, fontSize:15, fontWeight:700, textDecoration:"none",
               color: blue[700], background: blue[50], border:`1.5px solid ${blue[100]}`,
             }}>
-              Try Free Test First
+              View Mock Tests
             </Link>
             <Link href="/login" style={{
               display:"inline-flex", alignItems:"center", gap:8, padding:"12px 28px",

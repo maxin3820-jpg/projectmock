@@ -85,9 +85,9 @@ export default function AdminPage() {
   const bg = darkMode ? "#0f172a" : "#f8fafc";
 
   return (
-    <div style={{ display: "flex", height: "100vh", overflow: "hidden", background: bg }}>
+    <div style={{ display: "flex", height: "100vh", overflow: "hidden", background: bg, position: "relative" }}>
       <Sidebar />
-      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+      <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", minWidth: 0 }}>
         <Topbar title={sectionTitles[activeSection] ?? "Admin Panel"} />
         <div style={{ flex: 1, overflow: "auto", background: bg }}>
           {sectionMap[activeSection] ?? <Dashboard />}

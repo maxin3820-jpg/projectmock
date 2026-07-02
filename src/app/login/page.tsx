@@ -86,7 +86,7 @@ export default function LoginPage() {
             <h1 style={{ fontSize: 28, fontWeight: 900, color: "#0f172a", marginBottom: 8 }}>Sign in</h1>
             <p style={{ color: "#64748b", fontSize: 15 }}>
               Don&apos;t have an account?{" "}
-              <Link href="#" style={{ color: university.colors.primaryLight, fontWeight: 700, textDecoration: "none" }}>
+              <Link href="/signup" style={{ color: university.colors.primaryLight, fontWeight: 700, textDecoration: "none" }}>
                 Sign up free
               </Link>
             </p>
